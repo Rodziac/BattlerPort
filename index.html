@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BATTLER</title>
+
+    <link rel="stylesheet" type="text/css" href="http://meyerweb.com/eric/tools/css/reset/reset.css">
+
+    <style>
+        body {
+            padding: 20px;
+        }
+
+        .messageBox {
+            margin: 20px;
+        }
+
+        #messageList {
+            border: 1px solid black;
+            width: 600px;
+            height: 200px;
+            overflow-y: scroll;
+        }
+        .user {
+            font-weight: bold;
+        }
+        .message.person1 .user {
+            color: orange;
+        }
+        .message.person2 .user {
+            color: magenta;
+        }
+        .message.chatbot .user {
+            color: purple;
+        }
+    </style>
+
+
+</head>
+<body>
+    <div id="messageList"></div>
+    <input type="text" class="messageBox" id="person1"></input>
+    <input type="text" class="messageBox" id="person2"></input>
+</body>
+<script type="text/javascript">
+    var messageList = document.getElementById("messageList");
+    [].forEach.call(document.getElementsByClassName("messageBox"), function(messageBox){
+        messageBox.addEventListener("keydown", function(e){
+            if (e.keyCode == 13) {
+                messageList.innerHTML += "<span class='message " + messageBox.id + "'><span class='user'>" + messageBox.id + ":</span> " + messageBox.value + "</span><br>";
+
+                OnEvent_ChatWndReceiveMessage(
+                    {
+                        SendMessage: function(data) {
+                            messageList.innerHTML+= "<span class='message chatbot'><span class='user'>chatbot:</span> " + data + "</span><br>";
+                        },
+                        id: 1
+                    },
+                    messageBox.id,
+                    messageBox.value,
+                    null);
+
+                messageBox.value = "";
+                messageList.scrollTop = messageList.scrollHeight;
+            }
+        });
+    });
+</script>
+<script src="./Vars.js" type="text/javascript"></script>
+<script src="./Alea.js" type="text/javascript"></script>
+<script src="./Battler.js" type="text/javascript"></script>
+<script src="./Commands.js" type="text/javascript"></script>
+<script src="./Damage.js" type="text/javascript"></script>
+<script src="./Functions.js" type="text/javascript"></script>
+<script src="./helper_lc.js" type="text/javascript"></script>
+<script src="./iniEdit.js" type="text/javascript"></script>
+<script src="./ItemEquip.js" type="text/javascript"></script>
+<script src="./Menu.js" type="text/javascript"></script>
+<script src="./Prefs.js" type="text/javascript"></script>
+<script src="./RandMon.js" type="text/javascript"></script>
+<script src="./StatMods.js" type="text/javascript"></script>
+<script src="./Status.js" type="text/javascript"></script>
+<script src="./TypeList.js" type="text/javascript"></script>
+<script src="./Wnd_About.js" type="text/javascript"></script>
+<script src="./Wnd_Cmd.js" type="text/javascript"></script>
+<script src="./Wnd_Config.js" type="text/javascript"></script>
+<script src="./Wnd_Equip.js" type="text/javascript"></script>
+<script src="./Wnd_Items.js" type="text/javascript"></script>
+<script src="./Wnd_Mons.js" type="text/javascript"></script>
+<script src="./Wnd_Moves.js" type="text/javascript"></script>
+<script src="./config/equipDB.js" type="text/javascript"></script>
+<script src="./config/itemDB.js" type="text/javascript"></script>
+<script src="./config/monParty.js" type="text/javascript"></script>
+<script src="./config/moveDB.js" type="text/javascript"></script>
+<script src="./config/settings.js" type="text/javascript"></script>
+<script src="./Lang/en.js" type="text/javascript"></script>
+<script>
+    OnEvent_Initialize();
+</script>
+
+</html>
